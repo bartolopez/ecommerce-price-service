@@ -5,8 +5,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
@@ -14,7 +14,6 @@ import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlConfig.ErrorMode;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -27,7 +26,7 @@ import es.ecommerce.EcommercePriceServiceApplication;
  * Test for rest controller validation
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = EcommercePriceServiceApplication.class)
-@ExtendWith(SpringExtension.class)
+@AutoConfigureMockMvc
 @Sql(scripts = { "/data_for_tests.sql" }, config = @SqlConfig(errorMode = ErrorMode.CONTINUE_ON_ERROR))
 @DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 public class PriceControllerTest {
@@ -49,11 +48,11 @@ public class PriceControllerTest {
 	@Test
 	public void validatePrice1() throws Exception {
 
-		String suppliedDate = "2020-06-14T10:00:00.000Z";
+		String suppliedDate = "2020-06-14T10:00:00";
 		Long brandId = 1L;
 		Long productId = 35455L;
 
-		String uri = new StringBuilder("/prices/").append("?brandId=").append(brandId).append("&productId=").append(productId)
+		String uri = new StringBuilder("/prices").append("?brandId=").append(brandId).append("&productId=").append(productId)
 				.append("&suppliedDate=").append(suppliedDate).toString();
 
 		this.mvc.perform(get(uri).contentType(MediaType.APPLICATION_JSON))
@@ -68,12 +67,12 @@ public class PriceControllerTest {
 
 	@Test
 	public void validatePrice2() throws Exception {
-		String suppliedDate = "2020-06-14T16:00:00.000Z";
+		String suppliedDate = "2020-06-14T16:00:00";
 
 		Long brandId = 1L;
 		Long productId = 35455L;
 
-		String uri = new StringBuilder("/prices/").append("?brandId=").append(brandId).append("&productId=").append(productId)
+		String uri = new StringBuilder("/prices").append("?brandId=").append(brandId).append("&productId=").append(productId)
 				.append("&suppliedDate=").append(suppliedDate).toString();
 
 		this.mvc.perform(get(uri).contentType(MediaType.APPLICATION_JSON))
@@ -87,11 +86,11 @@ public class PriceControllerTest {
 
 	@Test
 	public void validatePrice3() throws Exception {
-		String suppliedDate = "2020-06-14T21:00:00.000Z";
+		String suppliedDate = "2020-06-14T21:00:00";
 		Long brandId = 1L;
 		Long productId = 35455L;
 
-		String uri = new StringBuilder("/prices/").append("?brandId=").append(brandId).append("&productId=").append(productId)
+		String uri = new StringBuilder("/prices").append("?brandId=").append(brandId).append("&productId=").append(productId)
 				.append("&suppliedDate=").append(suppliedDate).toString();
 
 		this.mvc.perform(get(uri).contentType(MediaType.APPLICATION_JSON))
@@ -105,11 +104,11 @@ public class PriceControllerTest {
 
 	@Test
 	public void validatePrice4() throws Exception {
-		String suppliedDate = "2020-06-15T10:00:00.000Z";
+		String suppliedDate = "2020-06-15T10:00:00";
 		Long brandId = 1L;
 		Long productId = 35455L;
 
-		String uri = new StringBuilder("/prices/").append("?brandId=").append(brandId).append("&productId=").append(productId)
+		String uri = new StringBuilder("/prices").append("?brandId=").append(brandId).append("&productId=").append(productId)
 				.append("&suppliedDate=").append(suppliedDate.toString()).toString();
 
 		this.mvc.perform(get(uri).contentType(MediaType.APPLICATION_JSON))
@@ -123,11 +122,11 @@ public class PriceControllerTest {
 
 	@Test
 	public void validatePrice5() throws Exception {
-		String suppliedDate = "2020-06-16T21:00:00.000Z";
+		String suppliedDate = "2020-06-16T21:00:00";
 		Long brandId = 1L;
 		Long productId = 35455L;
 
-		String uri = new StringBuilder("/prices/").append("?brandId=").append(brandId).append("&productId=").append(productId)
+		String uri = new StringBuilder("/prices").append("?brandId=").append(brandId).append("&productId=").append(productId)
 				.append("&suppliedDate=").append(suppliedDate).toString();
 
 		this.mvc.perform(get(uri).contentType(MediaType.APPLICATION_JSON))
