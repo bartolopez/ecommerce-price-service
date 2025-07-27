@@ -140,6 +140,28 @@ mvn test
 
 ---
 
+### Pruebas End-to-End (E2E) con RestAssured
+
+Además de los tests unitarios y de integración, se ha añadido la clase `PriceE2ETest` con pruebas E2E usando la librería [RestAssured](https://rest-assured.io/).
+
+Estas pruebas arrancan el servidor en un puerto aleatorio (`@SpringBootTest(webEnvironment = RANDOM_PORT)`) y validan las respuestas reales del endpoint `/prices`.
+
+Casos cubiertos en `PriceE2ETest`:
+
+- **Test 1**: 14/06 a las 10:00 → precio esperado `35.50`
+- **Test 2**: 14/06 a las 16:00 → precio esperado `25.45`
+- **Test 3**: 14/06 a las 21:00 → precio esperado `35.50`
+- **Test 4**: 15/06 a las 10:00 → precio esperado `30.50`
+- **Test 5**: 16/06 a las 21:00 → precio esperado `38.95`
+
+Para ejecutar:
+
+```bash
+mvn test -Dtest=PriceE2ETest
+```
+
+Estas pruebas permiten validar el sistema de forma realista como un cliente externo y simulan casos de negocio reales.
+
 ## Consola de Base de Datos H2
 
 Accesible desde:  
