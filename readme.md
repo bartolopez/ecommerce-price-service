@@ -1,112 +1,166 @@
-# Price service
+# Servicio de Precios
 
-Service to manage prices from supplied date, brand and product
+Este proyecto consiste en una aplicación Spring Boot que expone un endpoint REST para consultar precios aplicables a un producto en una fecha determinada y para una cadena concreta. Utiliza una base de datos en memoria H2 y cuenta con pruebas unitarias y de integración del endpoint.
 
-## Estructura de paquetes
+---
 
-### 1. domain
+## Descripción del Servicio
 
-* model
+El servicio permite consultar la tarifa final que debe aplicarse a un producto, en función de:
 
-Paquete: es.ecommerce.domain.model
-Núcleo del dominio, independiente de frameworks
-contiene las entidades y objetos de dominio. Price.
+**Parámetros de entrada del endpoint REST**:
 
-* port
+- `suppliedDate` (fecha de aplicación): en formato `yyyy-MM-ddTHH:mm:ss.000Z`
+- `productId` (identificador del producto)
+- `brandId` (identificador de la cadena)
 
-Paquete: es.ecommerce.domain.port
-Define las interfaces (puertos) que otros componentes deben implementar. `PriceRepository`.
+**Respuesta esperada**:
 
-### 2. application
+- Identificador del producto
+- Identificador de la cadena
+- Tarifa a aplicar (price list)
+- Fechas de aplicación de dicha tarifa (inicio y fin)
+- Precio final a aplicar (price)
 
-* service
+---
 
-Paquete: `es.ecommerce.application.service`
-Clases que implementan lógica de aplicación, orquestando llamadas al dominio y puertos. `PriceService`.
+## Estructura de Paquetes
 
+### 1. Dominio (`es.ecommerce.domain`)
 
-### 3. infraestructure
+- **model**: contiene las entidades y objetos de dominio (`Price`)
+- **port**: define las interfaces que deben implementar los adaptadores (`PriceRepository`)
 
-* persistence
+### 2. Aplicación (`es.ecommerce.application`)
 
-Paquete: `es.ecommerce.infraestructure.persistence`
-Implementa adaptadores secundarios (salida), como bases de datos, servicios externos...
-implementación concreta del puerto PriceRepository usando JPA y Spring Data.
+- **service**: contiene la lógica de negocio del servicio (`PriceService`)
 
+### 3. Infraestructura (`es.ecommerce.infraestructure`)
 
-### 4. Web
+- **persistence**: implementación del repositorio (`PriceRepository`) usando Spring Data JPA y base de datos H2
 
-Paquete: `es.ecommerce.web`
-Adaptadores primarios (entrada), como controladores REST, GraphQL, CLI, etc.
+### 4. Web (`es.ecommerce.web`)
 
+- Controlador REST que expone el endpoint de consulta de precios (`PriceController`)
 
-### 5. Configuration
+### 5. Configuración (`es.ecommerce.configuration`)
 
-Paquete: `es.ecommerce.configuration`
-Clase `@Configuration` que ensambla dependencias (beans) y hacen wiring manual o por anotaciones de Spring.
+- Configuración de beans de Spring, incluyendo ensamblado de dependencias
 
+### 6. Excepciones (`es.ecommerce.exception`)
 
-### 6. Excepciones
-* Exceptions:
-Exception management: `es.ecommerce.exception`
+- Gestión de errores personalizados, por ejemplo cuando no se encuentran precios
 
-### 7. Testing
-Package with tests: `com.ecommerce.price.test`
+### 7. Testing (`com.ecommerce.price.test`)
 
-5 tests to check rest controller: `PriceControllerTest`
-5 unit tests for services: `PriceServiceTest`
+- Pruebas del controlador REST: `PriceControllerTest` (mínimo 5 casos)
+- Pruebas unitarias del servicio: `PriceServiceTest` (mínimo 5 casos)
 
 ### 8. Recursos
 
-* Resources: `src/main/resources`
-`application.yaml`: Configuration of application
-`data-h2.sql`: script to load initial data
+- `application.yaml`: configuración de la aplicación
+- `data-h2.sql`: script de carga de datos iniciales en H2
 
+---
 
+## Cómo ejecutar la aplicación
 
-## Ejecutar la aplicación
+### Desde código fuente:
 
-* Executing desde el propio source code
-
-```
+```bash
 mvn spring-boot:run
 ```
 
-* Ejecutar la aplicación
+### Desde el JAR:
 
-```
+```bash
 java -jar ecommerce-price-service-1.0.0-SNAPSHOT.jar
 ```
 
-* Swagger
-http://localhost:8080/swagger-ui/index.html
+---
 
-## Test application
+## Endpoint REST
 
-* Testing application
-http://localhost:8080/prices/?suppliedDate=[yyyy-MM-ddTHH:mm:ss.000Z]&productId=[productId]&brandId=[brandId]
+**URL**:  
+`GET /prices`
 
-* Testing application for example
+**Parámetros**:
+- `suppliedDate`: fecha de aplicación
+- `productId`: identificador del producto
+- `brandId`: identificador de la cadena
+
+**Ejemplo**:
+
+```
 http://localhost:8080/prices/?suppliedDate=2020-06-14T15:00:00.000Z&productId=35455&brandId=1
+```
 
-
-## Exceptions
-
-* In case there are no prices: `404` NOT_FOUND is raised with the following message body:
+**Respuesta exitosa** (HTTP 200):
 
 ```json
 {
-    "code": "NOT_FOUND",
-    "message": "prices have not been found"
+  "productId": 35455,
+  "brandId": 1,
+  "priceList": 2,
+  "startDate": "2020-06-14T15:00:00",
+  "endDate": "2020-06-14T18:30:00",
+  "price": 25.45
 }
 ```
 
-## Actuators
+---
 
-* Test actuator health
-http://localhost:8080/actuator/health
+## Gestión de Errores
 
-* Test actuator health
-http://localhost:8080/actuator/info
+Si no se encuentra ningún precio que aplicar para los parámetros dados, se devuelve:
 
+**HTTP 404 Not Found**:
 
+```json
+{
+  "code": "NOT_FOUND",
+  "message": "prices have not been found"
+}
+```
+
+---
+
+## Pruebas
+
+### Ejecutar las pruebas:
+
+```bash
+mvn test
+```
+
+### Tipos de prueba:
+
+- **`PriceControllerTest`**: pruebas del endpoint REST verificando diferentes combinaciones de parámetros de entrada y comportamiento del servicio
+- **`PriceServiceTest`**: pruebas de la lógica del servicio, incluyendo selección correcta de la tarifa según prioridad y fechas
+
+---
+
+## Consola de Base de Datos H2
+
+Accesible desde:  
+`http://localhost:8080/h2-console`  
+Configuración por defecto:  
+- JDBC URL: `jdbc:h2:mem:testdb`
+- Usuario: `sa`
+- Contraseña: *(vacía)*
+
+---
+
+## Swagger (Documentación API)
+
+`http://localhost:8080/swagger-ui/index.html`
+
+---
+
+## Actuadores de Spring Boot
+
+- Health:  
+  `http://localhost:8080/actuator/health`
+
+- Info:  
+  `http://localhost:8080/actuator/info`
