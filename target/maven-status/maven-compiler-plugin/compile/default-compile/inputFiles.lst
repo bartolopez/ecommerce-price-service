@@ -1,8 +1,0 @@
-C:\Projects\Configuration\git-repo\ecommerce-price-service\src\main\java\es\ecommerce\application\service\PriceService.java
-C:\Projects\Configuration\git-repo\ecommerce-price-service\src\main\java\es\ecommerce\configuration\PriceConfig.java
-C:\Projects\Configuration\git-repo\ecommerce-price-service\src\main\java\es\ecommerce\domain\model\Price.java
-C:\Projects\Configuration\git-repo\ecommerce-price-service\src\main\java\es\ecommerce\domain\port\PriceRepository.java
-C:\Projects\Configuration\git-repo\ecommerce-price-service\src\main\java\es\ecommerce\infrastructure\persistence\PriceEntity.java
-C:\Projects\Configuration\git-repo\ecommerce-price-service\src\main\java\es\ecommerce\infrastructure\persistence\PriceJpaRepository.java
-C:\Projects\Configuration\git-repo\ecommerce-price-service\src\main\java\es\ecommerce\infrastructure\persistence\PriceRepositoryAdapter.java
-C:\Projects\Configuration\git-repo\ecommerce-price-service\src\main\java\es\ecommerce\web\PriceController.java
