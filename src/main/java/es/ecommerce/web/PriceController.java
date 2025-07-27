@@ -1,13 +1,14 @@
 package es.ecommerce.web;
 
+import java.time.LocalDateTime;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.ecommerce.application.service.PriceService;
 import es.ecommerce.domain.model.Price;
-import es.ecommerce.web.dto.PriceRequestDTO;
 import es.ecommerce.web.dto.PriceResponseDTO;
 
 /**
@@ -23,8 +24,8 @@ public class PriceController {
 	}
 
 	@GetMapping("")
-	public PriceResponseDTO getPrices(@RequestBody PriceRequestDTO dto) {
-		Price price = this.priceService.getPrices(dto.getApplicationDate(), dto.getBrandId(), dto.getBrandId());
+	public PriceResponseDTO getPrices(@RequestParam LocalDateTime suppliedDate, @RequestParam Long brandId, @RequestParam Long productId) {
+		Price price = this.priceService.getPrices(suppliedDate, productId, brandId);
 
 		return this.mapToDto(price);
 	}

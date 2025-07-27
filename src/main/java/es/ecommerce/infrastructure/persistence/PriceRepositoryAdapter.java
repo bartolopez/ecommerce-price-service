@@ -3,6 +3,8 @@ package es.ecommerce.infrastructure.persistence;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,8 @@ import es.ecommerce.exception.BaseException;
 @Component
 public class PriceRepositoryAdapter implements PriceRepository {
 
+	private static Logger logger = LoggerFactory.getLogger(PriceRepositoryAdapter.class);
+
 	@Autowired
 	private PriceJpaRepository jpa;
 
@@ -24,7 +28,11 @@ public class PriceRepositoryAdapter implements PriceRepository {
 	public Price findByProduct(LocalDateTime applicationDate, Long productId, Long brandId) {
 		Price res;
 
+		logger.info("Buscando precios para {}, {}, {}", applicationDate, productId, brandId);
+
 		List<PriceEntity> prices = this.jpa.findByProduct(applicationDate, productId, brandId);
+
+		logger.info("Resultados encontrados: {}", prices.size());
 
 		if (prices.isEmpty()) {
 			throw new BaseException(BaseCodeException.NOT_FOUND, "prices have not been found");

@@ -13,9 +13,9 @@ import org.springframework.data.repository.query.Param;
 public interface PriceJpaRepository extends JpaRepository<PriceEntity, Long> {
 
 	@Query("""
-			SELECT p FROM Price p
+			SELECT p FROM PriceEntity p
 			WHERE p.productId = :productId
-			  AND p.brand.id = :brandId
+			  AND p.brandId = :brandId
 			  AND :applicationDate BETWEEN p.startDate AND p.endDate
 			ORDER BY p.priority DESC
 			""")
