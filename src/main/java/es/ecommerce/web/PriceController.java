@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.ecommerce.application.service.PriceService;
+import es.ecommerce.application.service.GetPriceUseCaseImpl;
 import es.ecommerce.domain.model.Price;
 import es.ecommerce.web.dto.PriceResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,9 +24,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/prices")
 public class PriceController {
 
-	private final PriceService priceService;
+	private final GetPriceUseCaseImpl priceService;
 
-	public PriceController(PriceService priceService) {
+	public PriceController(GetPriceUseCaseImpl priceService) {
 		this.priceService = priceService;
 	}
 

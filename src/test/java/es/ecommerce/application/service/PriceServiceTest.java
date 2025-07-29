@@ -34,7 +34,7 @@ class PriceServiceTest {
 		logger.info("Ejecutando test con logging activo");
 
 		PriceRepository repo = mock(PriceRepository.class);
-		PriceService service = new PriceService(repo);
+		GetPriceUseCaseImpl service = new GetPriceUseCaseImpl(repo);
 		Date suppliedDate = Date
 				.from(LocalDateTime.of(LocalDate.of(2020, 6, 14), LocalTime.of(10, 0, 0)).atZone(ZoneId.systemDefault()).toInstant());
 
@@ -59,7 +59,7 @@ class PriceServiceTest {
 	@Test
 	public void validatePrice2() {
 		PriceRepository repo = mock(PriceRepository.class);
-		PriceService service = new PriceService(repo);
+		GetPriceUseCaseImpl service = new GetPriceUseCaseImpl(repo);
 		Date suppliedDate = Date
 				.from(LocalDateTime.of(LocalDate.of(2020, 6, 14), LocalTime.of(16, 0, 0)).atZone(ZoneId.systemDefault()).toInstant());
 
@@ -84,7 +84,7 @@ class PriceServiceTest {
 	@Test
 	public void validatePrice3() {
 		PriceRepository repo = mock(PriceRepository.class);
-		PriceService service = new PriceService(repo);
+		GetPriceUseCaseImpl service = new GetPriceUseCaseImpl(repo);
 		Date suppliedDate = Date
 				.from(LocalDateTime.of(LocalDate.of(2020, 6, 14), LocalTime.of(21, 0, 0)).atZone(ZoneId.systemDefault()).toInstant());
 
@@ -109,7 +109,7 @@ class PriceServiceTest {
 	@Test
 	public void validatePrice4() {
 		PriceRepository repo = mock(PriceRepository.class);
-		PriceService service = new PriceService(repo);
+		GetPriceUseCaseImpl service = new GetPriceUseCaseImpl(repo);
 
 		Date suppliedDate = Date
 				.from(LocalDateTime.of(LocalDate.of(2020, 6, 15), LocalTime.of(10, 0, 0)).atZone(ZoneId.systemDefault()).toInstant());
@@ -135,7 +135,7 @@ class PriceServiceTest {
 	@Test
 	public void validatePrice5() {
 		PriceRepository repo = mock(PriceRepository.class);
-		PriceService service = new PriceService(repo);
+		GetPriceUseCaseImpl service = new GetPriceUseCaseImpl(repo);
 		Date suppliedDate = Date
 				.from(LocalDateTime.of(LocalDate.of(2020, 6, 16), LocalTime.of(21, 0, 0)).atZone(ZoneId.systemDefault()).toInstant());
 
