@@ -131,4 +131,17 @@ public class PriceControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.price").value(38.95));
 	}
 
+	@Test
+	void should_return_404_when_no_price_found() throws Exception {
+		this.mvc.perform(get("/prices").param("suppliedDate", "2025-01-01T00:00:00").param("productId", "99999") // inexistente
+				.param("brandId", "1").accept(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
+	}
+
+	@Test
+	void should_return_400_when_missing_param() throws Exception {
+		this.mvc.perform(get("/prices").param("productId", "35455")
+				// falta suppliedDate
+				.param("brandId", "1")).andExpect(status().isBadRequest());
+	}
+
 }
