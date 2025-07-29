@@ -1,6 +1,7 @@
 package es.ecommerce.domain.port;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import es.ecommerce.domain.model.Price;
 
@@ -16,6 +17,6 @@ public interface PriceRepository {
 	 *            identifier
 	 * @return price
 	 */
-	Price findByProduct(LocalDateTime applicationDate, Long brandId, Long productId);
+	List<Price> findByProduct(LocalDateTime applicationDate, Long brandId, Long productId);
 
 }

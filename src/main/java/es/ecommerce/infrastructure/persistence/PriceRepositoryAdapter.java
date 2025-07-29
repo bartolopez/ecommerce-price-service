@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 
 import es.ecommerce.domain.model.Price;
 import es.ecommerce.domain.port.PriceRepository;
-import es.ecommerce.exception.BaseCodeException;
-import es.ecommerce.exception.BaseException;
 
 /**
  * Price repository adapter implementa {@link PriceRepository} usando {@link PriceJpaRepository}
@@ -25,22 +23,15 @@ public class PriceRepositoryAdapter implements PriceRepository {
 	private PriceJpaRepository jpa;
 
 	@Override
-	public Price findByProduct(LocalDateTime applicationDate, Long productId, Long brandId) {
-		Price res;
+	public List<Price> findByProduct(LocalDateTime applicationDate, Long productId, Long brandId) {
 
-		logger.info("Buscando precios para {}, {}, {}", applicationDate, productId, brandId);
+		logger.debug("Buscando precios para {}, {}, {}", applicationDate, productId, brandId);
 
-		List<PriceEntity> prices = this.jpa.findByProduct(applicationDate, productId, brandId);
+		List<Price> prices = this.jpa.findByProduct(applicationDate, productId, brandId).stream().map(this::toDomain).toList();
 
-		logger.info("Resultados encontrados: {}", prices.size());
+		logger.debug("Resultados encontrados: {}", prices.size());
 
-		if (prices.isEmpty()) {
-			throw new BaseException(BaseCodeException.NOT_FOUND, "prices have not been found");
-		} else {
-			res = this.toDomain(prices.get(0));
-		}
-
-		return res;
+		return prices;
 	}
 
 	/**

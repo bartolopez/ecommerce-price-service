@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Collections;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,9 @@ import org.slf4j.LoggerFactory;
 import es.ecommerce.domain.model.Price;
 import es.ecommerce.domain.port.PriceRepository;
 
+/**
+ * Test price service
+ */
 class PriceServiceTest {
 
 	private static Logger logger = LoggerFactory.getLogger(PriceServiceTest.class);
@@ -40,8 +44,8 @@ class PriceServiceTest {
 		// Configura el mock para devolver un resultado válido
 		when(repo.findByProduct(any(LocalDateTime.class), eq(productId), eq(brandId)))
 
-				.thenReturn(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0), LocalDateTime.of(2020, 12, 31, 23, 59), 1L,
-						productId, 0, 35.5, "EUR"));
+				.thenReturn(Collections.singletonList(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0),
+						LocalDateTime.of(2020, 12, 31, 23, 59), 1L, productId, 0, 35.5, "EUR")));
 
 		Price priceDTO = service.getPrices(LocalDateTime.ofInstant(suppliedDate.toInstant(), ZoneId.systemDefault()), productId, brandId);
 
@@ -65,8 +69,8 @@ class PriceServiceTest {
 		// Configura el mock para devolver un resultado válido
 		when(repo.findByProduct(any(LocalDateTime.class), eq(productId), eq(brandId)))
 
-				.thenReturn(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0), LocalDateTime.of(2020, 12, 31, 23, 59), 1L,
-						productId, 0, 25.45, "EUR"));
+				.thenReturn(Collections.singletonList(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0),
+						LocalDateTime.of(2020, 12, 31, 23, 59), 1L, productId, 0, 25.45, "EUR")));
 
 		Price priceDTO = service.getPrices(LocalDateTime.ofInstant(suppliedDate.toInstant(), ZoneId.systemDefault()), productId, brandId);
 
@@ -90,8 +94,8 @@ class PriceServiceTest {
 		// Configura el mock para devolver un resultado válido
 		when(repo.findByProduct(any(LocalDateTime.class), eq(productId), eq(brandId)))
 
-				.thenReturn(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0), LocalDateTime.of(2020, 12, 31, 23, 59), 1L,
-						productId, 0, 35.5, "EUR"));
+				.thenReturn(Collections.singletonList(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0),
+						LocalDateTime.of(2020, 12, 31, 23, 59), 1L, productId, 0, 35.5, "EUR")));
 
 		Price priceDTO = service.getPrices(LocalDateTime.ofInstant(suppliedDate.toInstant(), ZoneId.systemDefault()), productId, brandId);
 
@@ -116,8 +120,8 @@ class PriceServiceTest {
 		// Configura el mock para devolver un resultado válido
 		when(repo.findByProduct(any(LocalDateTime.class), eq(productId), eq(brandId)))
 
-				.thenReturn(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0), LocalDateTime.of(2020, 12, 31, 23, 59), 1L,
-						productId, 0, 30.5, "EUR"));
+				.thenReturn(Collections.singletonList(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0),
+						LocalDateTime.of(2020, 12, 31, 23, 59), 1L, productId, 0, 30.5, "EUR")));
 
 		Price priceDTO = service.getPrices(LocalDateTime.ofInstant(suppliedDate.toInstant(), ZoneId.systemDefault()), productId, brandId);
 
@@ -141,8 +145,8 @@ class PriceServiceTest {
 		// Configura el mock para devolver un resultado válido
 		when(repo.findByProduct(any(LocalDateTime.class), eq(productId), eq(brandId)))
 
-				.thenReturn(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0), LocalDateTime.of(2020, 12, 31, 23, 59), 1L,
-						productId, 0, 38.95, "EUR"));
+				.thenReturn(Collections.singletonList(new Price(1L, brandId, LocalDateTime.of(2020, 6, 14, 0, 0),
+						LocalDateTime.of(2020, 12, 31, 23, 59), 1L, productId, 0, 38.95, "EUR")));
 
 		Price priceDTO = service.getPrices(LocalDateTime.ofInstant(suppliedDate.toInstant(), ZoneId.systemDefault()), productId, brandId);
 

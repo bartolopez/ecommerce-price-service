@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import es.ecommerce.domain.model.Price;
 import es.ecommerce.domain.port.PriceRepository;
+import es.ecommerce.exception.BaseCodeException;
+import es.ecommerce.exception.BaseException;
 
 /**
  * Price service
@@ -35,6 +37,7 @@ public class PriceService {
 	 */
 	public Price getPrices(LocalDateTime applicationDate, Long productId, Long brandId) {
 		log.info("Get prices -> date: {}  productId: {} brandId: {}", applicationDate, productId, brandId);
-		return this.priceRepository.findByProduct(applicationDate, productId, brandId);
+		return this.priceRepository.findByProduct(applicationDate, productId, brandId).stream().findFirst()
+				.orElseThrow(() -> new BaseException(BaseCodeException.NOT_FOUND, "prices have not been found"));
 	}
 }
