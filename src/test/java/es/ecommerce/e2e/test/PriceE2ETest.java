@@ -8,18 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.MethodMode;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlConfig.ErrorMode;
 
 import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Sql(scripts = { "/data_for_tests.sql" }, config = @SqlConfig(errorMode = ErrorMode.CONTINUE_ON_ERROR))
-@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 public class PriceE2ETest {
 
 	@LocalServerPort
