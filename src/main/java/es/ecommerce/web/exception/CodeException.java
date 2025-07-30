@@ -1,4 +1,4 @@
-package es.ecommerce.exception;
+package es.ecommerce.web.exception;
 
 /**
  * Enum for code exceptions

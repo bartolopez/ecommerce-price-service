@@ -1,4 +1,4 @@
-package es.ecommerce.exception;
+package es.ecommerce.web.exception;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import es.ecommerce.domain.exception.PriceNotAvailableException;
 
 /**
  * REST exception handler
@@ -27,6 +29,23 @@ public class BaseRestResponseEntityExceptionHandler extends ResponseEntityExcept
 	}
 
 	/**
+	 * Management of Prices not available
+	 *
+	 * @param ex
+	 *            exception
+	 * @return exception handler
+	 */
+	@ExceptionHandler(PriceNotAvailableException.class)
+	public ResponseEntity<ErrorResponseDTO> handlePriceNotAvailable(PriceNotAvailableException ex) {
+
+		// Log the exception
+		this.logger.error(ex.getMessage(), ex);
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.body(new ErrorResponseDTO(BaseCodeException.NOT_FOUND.getCode(), ex.getMessage()));
+	}
+
+	/**
 	 * Handler method for BaseException
 	 *
 	 * @param exception
@@ -40,7 +59,7 @@ public class BaseRestResponseEntityExceptionHandler extends ResponseEntityExcept
 
 		// By default the HTTP status is a 400 error
 		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-		ErrorResponseDto errorResponse = new ErrorResponseDto();
+		ErrorResponseDTO errorResponse = new ErrorResponseDTO();
 
 		if (exception != null) {
 
