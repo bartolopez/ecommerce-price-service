@@ -1,4 +1,4 @@
-package es.ecommerce.exception;
+package es.ecommerce.web.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * Error response data for REST services
  */
 @JsonInclude(Include.NON_NULL)
-public class ErrorResponseDto {
+public class ErrorResponseDTO {
 
 	private static final int NUMBER_100 = 100;
 
@@ -20,7 +20,7 @@ public class ErrorResponseDto {
 	/**
 	 * Default constructor
 	 */
-	public ErrorResponseDto() {
+	public ErrorResponseDTO() {
 
 		super();
 
@@ -36,7 +36,7 @@ public class ErrorResponseDto {
 	 * @param message
 	 *            Exception message
 	 */
-	public ErrorResponseDto(String code, String message) {
+	public ErrorResponseDTO(String code, String message) {
 
 		this(code, message, null);
 	}
@@ -51,7 +51,7 @@ public class ErrorResponseDto {
 	 * @param additionalInfo
 	 *            Additional info
 	 */
-	public ErrorResponseDto(String code, String message, String additionalInfo) {
+	public ErrorResponseDTO(String code, String message, String additionalInfo) {
 
 		super();
 
